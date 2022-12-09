@@ -25,12 +25,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.brochureList.adapter = adapter
-        binding.brochureList.layoutManager = GridLayoutManager(this, SPAN_COUNT)
+        binding.brochureList.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.grid_column_count))
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.fetchBrochures()
         }
-
-        viewModel.fetchBrochures()
 
         lifecycleScope.launchWhenCreated {
             viewModel.brochures.collectLatest { uiState ->
@@ -67,9 +65,5 @@ class MainActivity : AppCompatActivity() {
         binding.errorLayout.root.visibility = VISIBLE
         binding.errorLayout.errorMessage.text = uiState.exception.message
         handleLoadingState(false)
-    }
-
-    companion object {
-        const val SPAN_COUNT = 2
     }
 }

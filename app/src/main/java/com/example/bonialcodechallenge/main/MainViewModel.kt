@@ -14,6 +14,10 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     private val _brochures = MutableStateFlow<MainUiState>(MainUiState.Empty)
     val brochures: StateFlow<MainUiState> = _brochures
 
+    init {
+        fetchBrochures()
+    }
+
     fun fetchBrochures() {
         viewModelScope.launch {
             _brochures.emit(MainUiState.Loading)

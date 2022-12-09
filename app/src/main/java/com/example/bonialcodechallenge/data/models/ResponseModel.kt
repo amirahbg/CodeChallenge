@@ -6,7 +6,7 @@ data class ResponseModel(
     @SerializedName("_embedded") val embedded: Embedded
 )
 
-fun ResponseModel.filterBrochures(): List<Brochure> {
+fun ResponseModel.toBrochures(): List<Brochure> {
     return embedded.contents
         .filterNotNull()
         .filter { it.contentType != null && (it.contentType == "brochure" || it.contentType == "brochurePremium") }

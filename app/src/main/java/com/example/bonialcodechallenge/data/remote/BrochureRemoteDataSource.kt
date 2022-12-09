@@ -1,7 +1,7 @@
-package com.example.bonialcodechallenge.data
+package com.example.bonialcodechallenge.data.remote
 
 import com.example.bonialcodechallenge.data.models.ResponseModel
 
-interface RemoteDataSource {
+interface BrochureRemoteDataSource {
     suspend fun getBrochures(): Result<ResponseModel?>
 }

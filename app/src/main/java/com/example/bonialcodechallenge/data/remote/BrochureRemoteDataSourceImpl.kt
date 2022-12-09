@@ -1,9 +1,10 @@
-package com.example.bonialcodechallenge.data
+package com.example.bonialcodechallenge.data.remote
 
 import com.example.bonialcodechallenge.data.models.ResponseModel
 import javax.inject.Inject
 
-class DefaultRemoteDataSource @Inject constructor(private val bonialService: BonialService) : RemoteDataSource {
+class BrochureRemoteDataSourceImpl @Inject constructor(private val bonialService: BonialService) :
+    BrochureRemoteDataSource {
 
     override suspend fun getBrochures(): Result<ResponseModel?> {
         return try {

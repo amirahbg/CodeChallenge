@@ -16,7 +16,7 @@ fun ResponseModel.filterBrochures(): List<Brochure> {
                 it.content?.first()?.brochureImage ?: "",
                 it.content?.first()?.retailer?.name ?: "",
                 it.contentType == "brochurePremium",
-                it.distance ?: Double.MAX_VALUE
+                it.content?.first()?.distance ?: Double.MAX_VALUE
             )
         }
 }

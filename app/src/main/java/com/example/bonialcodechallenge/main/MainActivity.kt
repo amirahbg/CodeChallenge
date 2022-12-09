@@ -24,11 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.brochureList.adapter = adapter
-        binding.brochureList.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.grid_column_count))
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.fetchBrochures()
-        }
+        setupUi()
 
         lifecycleScope.launchWhenCreated {
             viewModel.mainUiState.collectLatest { uiState ->
@@ -39,6 +35,14 @@ class MainActivity : AppCompatActivity() {
                     is MainUiState.Error -> handleErrorState(uiState)
                 }
             }
+        }
+    }
+
+    private fun setupUi() {
+        binding.brochureList.adapter = adapter
+        binding.brochureList.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.grid_column_count))
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.fetchBrochures()
         }
     }
 

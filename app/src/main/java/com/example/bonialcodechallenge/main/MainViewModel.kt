@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bonialcodechallenge.data.BrochureRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,11 +33,9 @@ class MainViewModel @Inject constructor(
                     _mainUiState.emit(MainUiState.Loading)
                 }
                 .collectLatest {
-                    it
-                        .onFailure { throwable ->
+                    it.onFailure { throwable ->
                             _mainUiState.emit(MainUiState.Error(throwable))
                         }
-
                 }
         }
     }

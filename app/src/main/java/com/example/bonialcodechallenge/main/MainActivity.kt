@@ -1,6 +1,5 @@
 package com.example.bonialcodechallenge.main
 
-import android.R
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.bonialcodechallenge.R
 import com.example.bonialcodechallenge.R.*
 import com.example.bonialcodechallenge.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,10 +50,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             id.noFilter -> {
-                viewModel.applyFilter(Filter.NO_FILTER)
+                viewModel.applyFilter(BrochureFilter.NO_FILTER)
             }
             id.closerThan5Filter -> {
-                viewModel.applyFilter(Filter.CLOSER_THAN_5_FILTER)
+                viewModel.applyFilter(BrochureFilter.LESS_THAN_5_KM)
             }
         }
         return true
@@ -63,7 +61,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUi() {
         binding.brochureList.adapter = adapter
-        binding.brochureList.layoutManager = GridLayoutManager(this, resources.getInteger(integer.grid_column_count))
+        binding.brochureList.layoutManager =
+            GridLayoutManager(this, resources.getInteger(integer.grid_column_count))
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.fetchBrochures()
         }
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleEmptyState() {
         binding.brochureList.visibility = GONE
         binding.errorLayout.root.visibility = VISIBLE
-        binding.errorLayout.errorMessage.setText(R.string.empty_list_error)
+        binding.errorLayout.errorMessage.setText(string.empty_list_error)
         handleLoadingState(false)
     }
 

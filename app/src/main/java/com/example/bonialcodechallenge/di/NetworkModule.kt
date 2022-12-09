@@ -1,9 +1,16 @@
 package com.example.bonialcodechallenge.di
 
-import com.example.bonialcodechallenge.data.*
+import com.example.bonialcodechallenge.data.BrochureRepository
+import com.example.bonialcodechallenge.data.BrochureRepositoryImpl
+import com.example.bonialcodechallenge.data.local.BrochureLocalDataSource
+import com.example.bonialcodechallenge.data.local.BrochureLocalDataSourceImpl
 import com.example.bonialcodechallenge.data.models.Content
-import com.example.bonialcodechallenge.data.DefaultRepository
+import com.example.bonialcodechallenge.data.remote.BonialService
+import com.example.bonialcodechallenge.data.remote.BrochureRemoteDataSource
+import com.example.bonialcodechallenge.data.remote.BrochureRemoteDataSourceImpl
+import com.example.bonialcodechallenge.data.remote.ContentDeserializer
 import com.google.gson.GsonBuilder
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,37 +20,52 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+abstract class NetworkModule {
 
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .build()
+    companion object {
+
+        @Provides
+        @Singleton
+        fun provideOkHttpClient(
+        ): OkHttpClient {
+            return OkHttpClient.Builder()
+                .build()
+        }
+
+        @Provides
+        @Singleton
+        fun provideBonialService(): BonialService {
+            val gson = GsonBuilder().registerTypeAdapter(Content::class.java, ContentDeserializer())
+                .create()
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://test-mobile-configuration-files.s3.eu-central-1.amazonaws.com/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+            return retrofit.create(BonialService::class.java)
+        }
+
     }
 
-    @Provides
     @Singleton
-    fun provideBonialService(): BonialService {
-        val gson = GsonBuilder().registerTypeAdapter(Content::class.java, ContentDeserializer()).create()
+    @Binds
+    abstract fun provideRepository(
+        impl: BrochureRepositoryImpl
+    ): BrochureRepository
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://test-mobile-configuration-files.s3.eu-central-1.amazonaws.com/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-
-        return retrofit.create(BonialService::class.java)
-    }
-
-    @Provides
     @Singleton
-    fun provideRemoteDataSource(bonialService: BonialService): RemoteDataSource = DefaultRemoteDataSource(bonialService)
+    @Binds
+    abstract fun bindBrochureLocalDataSource(
+        impl: BrochureLocalDataSourceImpl
+    ): BrochureLocalDataSource
 
-    @Provides
     @Singleton
-    fun provideRepository(remoteDataSource: RemoteDataSource): Repository = DefaultRepository(remoteDataSource)
+    @Binds
+    abstract fun bindBrochureRemoteDataSource(
+        impl: BrochureRemoteDataSourceImpl
+    ): BrochureRemoteDataSource
+
 }

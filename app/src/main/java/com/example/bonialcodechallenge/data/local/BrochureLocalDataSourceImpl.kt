@@ -2,24 +2,22 @@ package com.example.bonialcodechallenge.data.local
 
 import com.example.bonialcodechallenge.data.models.Brochure
 import com.example.bonialcodechallenge.main.BrochureFilter
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class BrochureLocalDataSourceImpl @Inject constructor() : BrochureLocalDataSource {
 
-    private val _brochureFlow = MutableSharedFlow<List<Brochure>>()
+    private val _emitterBrochureFlow = MutableStateFlow<List<Brochure>>(emptyList())
+    private val _receiverBrochureFlow = _emitterBrochureFlow.asStateFlow()
 
     override suspend fun saveBrochures(brochures: List<Brochure>) {
-        _brochureFlow.emit(brochures)
+        _emitterBrochureFlow.emit(brochures)
     }
 
     override suspend fun getBrochures(
         filter: BrochureFilter
     ): Flow<List<Brochure>> {
-        return _brochureFlow
+        return _receiverBrochureFlow
             .flatMapLatest { brochures ->
                 val filteredBrochures = applyFilter(
                     filter,

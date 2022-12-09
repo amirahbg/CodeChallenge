@@ -21,7 +21,7 @@ class MainViewModelTest {
     @Before
     fun setUp() {
         repository = FakeRepository(publishFakeBrochure())
-        viewModel = MainViewModel(repository, mainCoroutineRule.testDispatcher)
+        viewModel = MainViewModel(repository)
     }
 
     @ExperimentalCoroutinesApi

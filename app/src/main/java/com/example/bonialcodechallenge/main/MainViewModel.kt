@@ -13,13 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val brochureRepository: BrochureRepository,
-    private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Empty)
     val mainUiState: StateFlow<MainUiState> = _mainUiState
 
-    private val _brochuresFlow = MutableStateFlow(BrochureFilter.NO_FILTER)
+    private val _emitterBrochuresFlow = MutableStateFlow(BrochureFilter.NO_FILTER)
+    private val _brochuresFlow = _emitterBrochuresFlow.asStateFlow()
 
     init {
         fetchBrochures()
@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(
 
     fun applyFilter(brochureFilter: BrochureFilter) {
         viewModelScope.launch {
-            _brochuresFlow.emit(brochureFilter)
+            _emitterBrochuresFlow.emit(brochureFilter)
         }
     }
 

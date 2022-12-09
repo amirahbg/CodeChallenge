@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BonialCodeChallenge</string>
+    <string name="empty_list_error">No brochure found!</string>
 </resources>

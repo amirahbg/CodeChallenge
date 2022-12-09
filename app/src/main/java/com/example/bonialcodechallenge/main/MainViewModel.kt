@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    private val _brochures = MutableStateFlow<MainUiState>(MainUiState.Empty)
-    val brochures: StateFlow<MainUiState> = _brochures
+    private val _mainUiState = MutableStateFlow<MainUiState>(MainUiState.Empty)
+    val mainUiState: StateFlow<MainUiState> = _mainUiState
 
     init {
         fetchBrochures()
@@ -20,17 +20,17 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 
     fun fetchBrochures() {
         viewModelScope.launch {
-            _brochures.emit(MainUiState.Loading)
+            _mainUiState.emit(MainUiState.Loading)
             repository.getBrochures()
                 .onSuccess {
                     if (it.isNullOrEmpty()) {
-                        _brochures.emit(MainUiState.Empty)
+                        _mainUiState.emit(MainUiState.Empty)
                     } else {
-                        _brochures.emit(MainUiState.Success(it))
+                        _mainUiState.emit(MainUiState.Success(it))
                     }
                 }
                 .onFailure {
-                    _brochures.emit(MainUiState.Error(it))
+                    _mainUiState.emit(MainUiState.Error(it))
                 }
         }
     }

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launchWhenCreated {
-            viewModel.brochures.collectLatest { uiState ->
+            viewModel.mainUiState.collectLatest { uiState ->
                 when (uiState) {
                     is MainUiState.Success -> handleSuccessState(uiState)
                     MainUiState.Empty -> handleEmptyState()

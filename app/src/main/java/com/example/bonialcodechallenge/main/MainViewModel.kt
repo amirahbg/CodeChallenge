@@ -1,5 +1,6 @@
 package com.example.bonialcodechallenge.main
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bonialcodechallenge.data.BrochureRepository
@@ -34,18 +35,16 @@ class MainViewModel @Inject constructor(
                 }
                 .collectLatest {
                     it
-                        .onSuccess {
-
-                        }
-                        .onFailure {
-                            _mainUiState.emit(MainUiState.Error(it))
+                        .onFailure { throwable ->
+                            _mainUiState.emit(MainUiState.Error(throwable))
                         }
 
                 }
         }
     }
 
-    private fun loadBrochures() {
+    @VisibleForTesting
+    fun loadBrochures() {
         viewModelScope.launch {
             _brochuresFlow
                 .flatMapLatest {

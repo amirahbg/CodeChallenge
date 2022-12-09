@@ -32,6 +32,7 @@ class MainViewModelTest {
         assert(uiState == MainUiState.Empty)
 
         viewModel.fetchBrochures()
+        viewModel.loadBrochures()
         advanceUntilIdle()
         uiState = viewModel.mainUiState.value
         assert(uiState is MainUiState.Error)
@@ -45,6 +46,7 @@ class MainViewModelTest {
         assert(uiState == MainUiState.Empty)
 
         viewModel.fetchBrochures()
+        viewModel.loadBrochures()
         advanceUntilIdle()
         uiState = viewModel.mainUiState.value
         assert(uiState is MainUiState.Empty)
@@ -58,6 +60,7 @@ class MainViewModelTest {
         assert(uiState == MainUiState.Empty)
 
         viewModel.fetchBrochures()
+        viewModel.loadBrochures()
         advanceUntilIdle()
         uiState = viewModel.mainUiState.value
         assert(uiState is MainUiState.Success && uiState.brochures == publishFakeBrochure())

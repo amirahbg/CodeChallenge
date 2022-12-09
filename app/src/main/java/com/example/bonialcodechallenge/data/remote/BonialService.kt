@@ -1,4 +1,4 @@
-package com.example.bonialcodechallenge.data
+package com.example.bonialcodechallenge.data.remote
 
 import com.example.bonialcodechallenge.data.models.ResponseModel
 import retrofit2.Response

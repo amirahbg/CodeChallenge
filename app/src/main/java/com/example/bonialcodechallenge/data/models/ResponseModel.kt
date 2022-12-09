@@ -13,8 +13,8 @@ fun ResponseModel.filterBrochures(): List<Brochure> {
         .map {
             Brochure(
                 it.content?.first()?.id ?: 0,
-                it.brochureImage ?: "",
-                it.retailer?.name ?: "",
+                it.content?.first()?.brochureImage ?: "",
+                it.content?.first()?.retailer?.name ?: "",
                 it.contentType == "brochurePremium",
                 it.distance ?: Double.MAX_VALUE
             )

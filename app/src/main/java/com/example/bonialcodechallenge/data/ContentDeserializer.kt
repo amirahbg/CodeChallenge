@@ -2,6 +2,7 @@ package com.example.bonialcodechallenge.data
 
 import com.example.bonialcodechallenge.data.models.Content
 import com.example.bonialcodechallenge.data.models.Retailer
+import com.google.gson.Gson
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -20,7 +21,8 @@ class ContentDeserializer : JsonDeserializer<Content> {
                 val nestedContents = context.deserialize<List<Content>>(nestedContentElement, List::class.java)
                 return Content(id, nestedContents, contentType, brochureImage, distance, retailer)
             } else if (nestedContentElement.isJsonObject) {
-                val nestedContent = context.deserialize<Content>(nestedContentElement, Content::class.java) // this line has a bug
+                val gson = Gson()
+                val nestedContent = gson.fromJson(nestedContentElement, Content::class.java)
                 return Content(id, nestedContent, contentType, brochureImage, distance, retailer)
             }
         }

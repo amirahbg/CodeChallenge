@@ -20,7 +20,7 @@ class ContentDeserializer : JsonDeserializer<Content> {
                 val nestedContents = context.deserialize<List<Content>>(nestedContentElement, List::class.java)
                 return Content(id, nestedContents, contentType, brochureImage, distance, retailer)
             } else if (nestedContentElement.isJsonObject) {
-                val nestedContent = context.deserialize<Content>(nestedContentElement, Content::class.java)
+                val nestedContent = context.deserialize<Content>(nestedContentElement, Content::class.java) // this line has a bug
                 return Content(id, nestedContent, contentType, brochureImage, distance, retailer)
             }
         }

@@ -1,10 +1,8 @@
 package com.example.bonialcodechallenge.di
 
-import com.example.bonialcodechallenge.data.BonialService
-import com.example.bonialcodechallenge.data.ContentDeserializer
-import com.example.bonialcodechallenge.data.DefaultRemoteDataSource
-import com.example.bonialcodechallenge.data.RemoteDataSource
+import com.example.bonialcodechallenge.data.*
 import com.example.bonialcodechallenge.data.models.Content
+import com.example.bonialcodechallenge.data.models.DefaultRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -44,4 +42,8 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRemoteDataSource(bonialService: BonialService): RemoteDataSource = DefaultRemoteDataSource(bonialService)
+
+    @Provides
+    @Singleton
+    fun provideRepository(remoteDataSource: RemoteDataSource): Repository = DefaultRepository(remoteDataSource)
 }

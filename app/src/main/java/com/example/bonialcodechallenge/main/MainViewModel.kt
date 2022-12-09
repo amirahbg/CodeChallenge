@@ -3,7 +3,10 @@ package com.example.bonialcodechallenge.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bonialcodechallenge.data.Repository
+import com.example.bonialcodechallenge.data.models.Brochure
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,7 +24,8 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     fun fetchBrochures() {
         viewModelScope.launch {
             _mainUiState.emit(MainUiState.Loading)
-            repository.getBrochures()
+            val response = async(Dispatchers.IO) { requestBrochures() }
+            response.await()
                 .onSuccess {
                     if (it.isNullOrEmpty()) {
                         _mainUiState.emit(MainUiState.Empty)
@@ -33,5 +37,9 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
                     _mainUiState.emit(MainUiState.Error(it))
                 }
         }
+    }
+
+    private suspend fun requestBrochures(): Result<List<Brochure>?> {
+        return repository.getBrochures()
     }
 }

@@ -1,7 +1,7 @@
-package com.example.bonialcodechallenge.data.models
+package com.example.bonialcodechallenge.data
 
-import com.example.bonialcodechallenge.data.RemoteDataSource
-import com.example.bonialcodechallenge.data.Repository
+import com.example.bonialcodechallenge.data.models.Brochure
+import com.example.bonialcodechallenge.data.models.filterBrochures
 import com.example.bonialcodechallenge.utils.UnexpectedError
 import javax.inject.Inject
 

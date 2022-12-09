@@ -2,7 +2,7 @@ package com.example.bonialcodechallenge.di
 
 import com.example.bonialcodechallenge.data.*
 import com.example.bonialcodechallenge.data.models.Content
-import com.example.bonialcodechallenge.data.models.DefaultRepository
+import com.example.bonialcodechallenge.data.DefaultRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides

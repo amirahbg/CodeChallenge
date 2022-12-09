@@ -1,6 +1,9 @@
 package com.example.bonialcodechallenge.main
 
+import android.R
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
@@ -8,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bonialcodechallenge.R
+import com.example.bonialcodechallenge.R.*
 import com.example.bonialcodechallenge.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,9 +43,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(com.example.bonialcodechallenge.R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            id.noFilter -> {
+                viewModel.applyFilter(Filter.NO_FILTER)
+            }
+            id.closerThan5Filter -> {
+                viewModel.applyFilter(Filter.CLOSER_THAN_5_FILTER)
+            }
+        }
+        return true
+    }
+
     private fun setupUi() {
         binding.brochureList.adapter = adapter
-        binding.brochureList.layoutManager = GridLayoutManager(this, resources.getInteger(R.integer.grid_column_count))
+        binding.brochureList.layoutManager = GridLayoutManager(this, resources.getInteger(integer.grid_column_count))
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.fetchBrochures()
         }

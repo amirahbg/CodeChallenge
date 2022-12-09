@@ -45,4 +45,15 @@ class MainViewModel @Inject constructor(
     private suspend fun requestBrochures(): Result<List<Brochure>?> {
         return repository.getBrochures()
     }
+
+    fun applyFilter(filter: Filter) {
+        when(filter) {
+            Filter.NO_FILTER -> {
+
+            }
+            Filter.CLOSER_THAN_5_FILTER -> {
+
+            }
+        }
+    }
 }

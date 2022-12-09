@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">BonialCodeChallenge</string>
     <string name="empty_list_error">No brochure found!</string>
+    <string name="menu_title_filter_closer_than_5">Closer than 5km</string>
+    <string name="menu_title_no_filter">No filter</string>
 </resources>

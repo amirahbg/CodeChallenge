@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/closerThan5Filter"
+        android:title="@string/menu_title_filter_closer_than_5" />
+    <item
+        android:id="@+id/noFilter"
+        android:title="@string/menu_title_no_filter" />
+</menu>

@@ -1,6 +1,6 @@
 package com.example.bonialcodechallenge.main
 
-enum class Filter {
+enum class BrochureFilter {
     NO_FILTER,
-    CLOSER_THAN_5_FILTER
+    LESS_THAN_5_KM
 }

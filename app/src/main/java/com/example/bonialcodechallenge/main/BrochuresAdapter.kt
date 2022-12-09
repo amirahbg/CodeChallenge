@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.example.bonialcodechallenge.R
 import com.example.bonialcodechallenge.data.models.Brochure
 import com.example.bonialcodechallenge.databinding.ItemBrochureBinding
 
@@ -32,6 +33,7 @@ class BrochuresAdapter : ListAdapter<Brochure, BrochuresAdapter.BrochureViewHold
             Glide.with(binding.brochureImage)
                 .load(brochure.brochureImageUrl)
                 .centerCrop()
+                .placeholder(R.drawable.ic_baseline_broken_image_24)
                 .into(binding.brochureImage)
         }
     }
